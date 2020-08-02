@@ -1,0 +1,34 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgray\c0;}
+\margl1440\margr1440\vieww16600\viewh19580\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 \CocoaLigature0 --- \
+- \
+  become: true\
+  hosts: webservers\
+  name: "Install metric beat"\
+  tasks: \
+    - \
+      command: "curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.8.0-amd64.deb"\
+      name: "Download metricbeat"\
+    - \
+      command: "sudo dpkg -i metricbeat-7.8.0-amd64.deb"\
+      name: "install metricbeat"\
+    - \
+      copy: \
+        dest: /etc/metricbeat/metricbeat.yml\
+        src: /etc/ansible/files/metricbeat-config.yml\
+      name: "drop in metricbeat config"\
+    - \
+      command: "metricbeat modules enable system"\
+      name: "enable and configure docker module for metric beat"\
+    - \
+      command: "metricbeat setup"\
+      name: "setup metric beat"\
+    - \
+      command: "service metricbeat start"\
+      name: "start metric beat"\
+}

@@ -1,0 +1,34 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgray\c0;}
+\margl1440\margr1440\vieww16600\viewh19580\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 \CocoaLigature0 --- \
+- \
+  become: true\
+  hosts: elk\
+  name: "installing and launching filebeat"\
+  tasks: \
+    - \
+      command: "curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.6.2-amd64.deb"\
+      name: "download filebeat deb"\
+    - \
+      command: "sudo dpkg -i filebeat-7.6.2-amd64.deb"\
+      name: "install filebeat deb"\
+    - \
+      copy: \
+        dest: /etc/filebeat/filebeat.yml\
+        src: /etc/ansible/files/filebeat-config.yml\
+      name: "drop in filebeat.yml"\
+    - \
+      command: "filebeat modules enable system"\
+      name: "enable and configure system module"\
+    - \
+      command: "filebeat setup"\
+      name: "setup filebeat"\
+    - \
+      command: "service filebeat start"\
+      name: "start filebeat service"\
+}
